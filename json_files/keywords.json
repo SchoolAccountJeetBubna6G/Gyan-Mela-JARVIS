@@ -1,0 +1,9 @@
+{
+    "program keywords":{
+        "music":["music", "song", "tunes", "sound", "play"],
+        "time":["time"],
+        "terminate":["power off", "terminate", "die"],
+        "weather":["weather", "temperature", "climate", "rain", "snow"],
+        "news":["news", "headlines", "world"]
+    }
+}
