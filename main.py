@@ -18,8 +18,8 @@ def main_loop(text):
         # if hotword_in(text, HOTWORDS):
         #     recognized_keywords = recognize_keywords(text)
         #     act_on_programs(recognized_keywords, text)
-        recognized_keywords = recognize_keywords(text)
-        act_on_programs(recognized_keywords, text)
+        recognize_keywords = recognize_keywords(text)
+        act_on_programs(recognize_keywords, text)
         if 'pause' in text:
             player.set_pause(1)
     except Exception:
