@@ -1,12 +1,7 @@
 import requests
-
-def Speak(text):
-    import pyttsx3
-    engine = pyttsx3.init()
-    engine.say(text)
-    engine.runAndWait()
-
-
+import os
+import pygame
+from text_to_voice import Speak
 API_WEATHER ='8bbf039e288627aa51a2103223647ded'
 
 def weather(text:str) -> None:

@@ -1,4 +1,4 @@
-def voice_recognition_init(path_to_model:str, method:str='google'):
+def voice_recognition_init(path_to_model:str=r"C:\Users\Dell\Desktop\JEET\JarvisRefactored\vosk-model-small-en-in-0.4 (1)\vosk-model-small-en-in-0.4", method:str='google'):
     if method == 'vosk':
         from vosk import KaldiRecognizer, Model
         import pyaudio
@@ -20,8 +20,9 @@ def voice_to_text(type="vosk") -> str:
         stream_vosk.start_stream()
         data = stream_vosk.read(4096, exception_on_overflow=False)
 
-        if recognizer.AcceptWaveform(data):
-            text = recognizer.Result()
+        global recognizer_vosk
+        if recognizer_vosk.AcceptWaveform(data):
+            text = recognizer_vosk.Result()
             return text[14:-3]
     elif type == 'google':
         with mic as source:
@@ -32,5 +33,6 @@ def voice_to_text(type="vosk") -> str:
                 return text
             except Exception:
                 print("Error occuured")
+                
      
 

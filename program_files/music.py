@@ -2,22 +2,44 @@
 from pytubefix import YouTube 
 import vlc
 from time import sleep
-from pygame import mixer
+import os
+import pygame
+import random
+from text_to_voice import Speak
 
-LOCAL_DOWNLOADS_PATH = r'C:\Users\Jeet\Desktop\JarvisRefactored\Downloads\dummy'
-LOCAL_PLAYLIST_PATH = r"C:\Users\Jeet\Desktop\JarvisRefactored\Downloads\playlists\default"
+# def Speak(data):
+#     voice = 'en-US-JennyNeural'
+#     file_path = rf"C:\Users\Dell\Desktop\JEET\JarvisRefactored\voice_segments\{random.randint(100000,999999)}"
+#     command = f'edge-tts --voice "{voice}" --text "{data}" --write-media {file_path}'
+#     os.system(command)
+
+#     pygame.init()
+#     pygame.mixer.init()
+#     pygame.mixer.music.load(file_path)
+
+#     try:
+#         pygame.mixer.music.play()
+
+#         while pygame.mixer.music.get_busy():
+#             pygame.time.Clock().tick(10)
+
+#     except Exception as e:
+#         print(e)
+#     finally:
+#         pygame.mixer.music.stop()
+#         pygame.mixer.quit()
+
+
+
+
+LOCAL_DOWNLOADS_PATH = r'C:\Users\Dell\Desktop\JEET\JarvisRefactored\songs\downloads'
+LOCAL_PLAYLIST_PATH = r"C:\Users\Dell\Desktop\JEET\JarvisRefactored\songs\playlists"
 ISPAUSED = False
 
 def init_music():
     global player, instance
     instance = vlc.Instance()
     player = instance.media_player_new()
-
-def Speak(text):
-    import pyttsx3
-    engine = pyttsx3.init()
-    engine.say(text)
-    engine.runAndWait()
 
 def find_song_name_in(text:str) -> str:
     ## Returns song name
@@ -51,17 +73,8 @@ def play_song(music_file_path:str, volume:float=100):
 
     # Set the media to the player
     player.set_media(media)
-
-    # Play the media
     player.play()
-    _ = True
-    while _:
-        print(player.is_playing() != 0) #Is playing?
-        
-        if player.is_playing() == 0:
-            print('dumass')
-        #     player.stop()
-            return
+    # Play the media
 
 def song_is_downloaded(song_name:str) -> bool:
     import os
@@ -104,7 +117,7 @@ def download_song(song_name:str):
     return song_path
 
 
-def play_music(text:str):
+def play_music(text:str, vol:int=100):
     print('playing music')
 
     PLAYLIST_WORDS = ['tunes','music']
@@ -113,7 +126,7 @@ def play_music(text:str):
             if word == keyword:
                 play_playlist(text)
                 return
-
+    print(f"{ISPAUSED} --- ISPAUSED (126 MUSIC / play music)")
     if music_is_playing() == False and ISPAUSED == False:
         song_name = find_song_name_in(text)
         print("song_name is,",song_name)
@@ -122,6 +135,7 @@ def play_music(text:str):
         except Exception:
             pass
         if song_name == None:
+            print("FOUND NO NAME SONG NAME")
             #Its a playlist
             playlist = find_playlist_name_in(text)
             if playlist == None:
@@ -134,20 +148,21 @@ def play_music(text:str):
                 except Exception:
                     Speak("There is no such playlist.")
         else: #song name is there
+            print("DELETE LATER 148 ---- MUSIC")
             try:
                 print(song_is_downloaded(song_name))
                 song_present = song_is_downloaded(song_name)[0]
                 if (song_present):
                     song_path = song_is_downloaded(song_name)[1]
                     print(song_path)
-                    play_song(rf'{LOCAL_DOWNLOADS_PATH}\\{song_path}')
+                    play_song(rf'{LOCAL_DOWNLOADS_PATH}\\{song_path}', vol)
                 else:
                     Speak('downloading song '+ song_name)
                     print('downloading song ', song_name)
                     song_path = download_song(song_name)
                     Speak('download complete, playing song')
                     print('download complete, playing song')
-                    play_song(song_path)
+                    play_song(song_path, vol)
             except Exception as e:
                 print('AN ERROR OCCURRED IN PLAY MUSIC', e)
 
@@ -158,14 +173,14 @@ def music_is_playing() -> bool:
 def pause_music():
     print('pausing')
     player.set_pause(1)
-    Speak('set pause bitch')
+    #Speak('Pausing')
     global ISPAUSED
     ISPAUSED = True
 
 def resume_music():
-    print('pausing')
+    print('reusming')
     player.set_pause(0)
-    Speak('resuming..')
+    #Speak('resuming..')
     global ISPAUSED
     ISPAUSED = False
 
@@ -188,3 +203,4 @@ def testing():
     # importing vlc module
     # import required module
     # song_path = song_is_downloaded('Rap God')[1]
+

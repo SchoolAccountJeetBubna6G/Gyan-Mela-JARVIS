@@ -2,8 +2,9 @@
     "program keywords":{
         "music":["music", "song", "tunes", "sound", "play"],
         "time":["time"],
-        "terminate":["power off", "terminate", "die"],
+        "terminate":["power off", "terminate"],
         "weather":["weather", "temperature", "climate", "rain", "snow"],
-        "news":["news", "headlines", "world"]
+        "news":["news", "headlines", "world"],
+        "start":["start", "boot up", "power up", "get runnning"]
     }
 }

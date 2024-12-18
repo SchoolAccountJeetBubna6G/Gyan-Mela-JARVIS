@@ -1,3 +1,5 @@
+from program_files.music import music_is_playing
+
 def initialising_keyword():
     import json
     file_name = 'json_files/keywords.json'
@@ -16,8 +18,8 @@ def recognize_keywords(text:str) -> list:
             elif x in keywords_list["weather"]: return {'keyword-present': True, 'keyword':"weather"}
             elif x in keywords_list["news"]: return {'keyword-present': True, 'keyword':"news"}
             #print(x in keywords_list["terminate"], f"The keyword found is {x}")
-
-        if len(text) > 6:
+        if music_is_playing() == True: return {'keyword-present': True, 'keyword':"music"}
+        if len(text) >= 4: 
             print('gemini')
             return {'keyword-present': True, 'keyword':"gemini"}
         return {'keyword-present':False}

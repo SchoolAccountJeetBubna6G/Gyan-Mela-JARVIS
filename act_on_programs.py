@@ -70,6 +70,7 @@ from program_files import music, clock, ask_gpt, weather, news
 from recognize_keywords import initialising_keyword, recognize_keywords, find_seconds_in_text
 import threading, text_to_voice
 from time import sleep
+from text_to_voice import Speak
 
 def init_act_on_program():
     music.init_music()
@@ -107,7 +108,7 @@ def act_on_programs(keyword_value:str, text:str) -> None:
             news.news()
 
 
-    control_words = {'pause':['pause'], 'resume':['resume'], 'stop':['stop','end']}
+    control_words = {'pause':['pause', 'boss'], 'resume':['resume'], 'stop':['stop','end']}
     for control_word in control_words:
         for word in control_words[control_word]:
             if music.music_is_playing():
@@ -117,6 +118,4 @@ def act_on_programs(keyword_value:str, text:str) -> None:
                     elif control_word == 'stop':
                         music.stop_music()
             elif control_word == 'resume':
-                    if word in text:
-                        print('resuming hereereerereerre')
-                        music.resume_music()
+                music.resume_music()
